@@ -1,4 +1,5 @@
 import {
+  Button,
   ContextMenu,
   Checkbox,
   CineDialog,
@@ -31,6 +32,7 @@ import {
   OHIFModal,
   ErrorBoundary,
   ErrorPage,
+  Divider
 } from './components';
 import { useDebounce, useMedia } from './hooks';
 
@@ -75,6 +77,8 @@ export {
   // Elements
   ICONS,
   //
+  Button,
+  Divider, //!\ Add divider ther
   Checkbox,
   Dropdown,
   Label,

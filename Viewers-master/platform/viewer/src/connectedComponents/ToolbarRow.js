@@ -248,17 +248,6 @@ class ToolbarRow extends Component {
             className="pull-right m-t-1 rm-x-1"
             style={{ marginLeft: 'auto' }}
           >
-            {/* <RoundedButtonGroup
-              options={this.buttonGroups.analyze}
-              value={'analyze'}
-              onValueChanged={() => {
-                // eslint-disable-next-line react/prop-types
-                this.props.analyze(
-                  this.props.activeViewport.StudyInstanceUID,
-                  this.props.studies
-                );
-              }}
-            />*/}
             {this.buttonGroups.right.length && (
               <RoundedButtonGroup
                 options={this.buttonGroups.right}

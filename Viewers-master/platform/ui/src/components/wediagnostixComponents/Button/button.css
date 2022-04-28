@@ -1,0 +1,10 @@
+
+.rounded {
+    border-radius: 25px;
+    background-color: var(--default-color);
+    width: 100px;
+    height: 30px;
+}
+.rounded:hover {
+    background-color: var(--active-color);
+}

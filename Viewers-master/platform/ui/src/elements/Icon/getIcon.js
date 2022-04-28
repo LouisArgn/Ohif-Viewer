@@ -89,8 +89,10 @@ import youtube from './icons/youtube.svg';
 import eye from './icons/eye.svg';
 import eyeClosed from './icons/eye-closed.svg';
 import envelopeSquare from './icons/envelope-square.svg';
+import wediagnostiX from './icons/WD-white-icon.svg';
 
 const ICONS = {
+  wediagnostiX,
   eye,
   'eye-closed': eyeClosed,
   brush,

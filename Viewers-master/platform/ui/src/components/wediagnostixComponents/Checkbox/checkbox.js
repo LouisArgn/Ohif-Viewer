@@ -24,9 +24,6 @@ export class Checkbox extends Component {
       label,
       type,
       hasError,
-      onChange,
-      isChecked,
-      indeterminate,
       name,
     } = this.props;
     const checkboxClassname = `

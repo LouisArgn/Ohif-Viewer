@@ -1,0 +1,27 @@
+.container-m {
+    font-size: 1.1em;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+.container-l {
+    font-size: 1.3em;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.border-m {
+    border-bottom: 3px solid var(--ui-border-color);
+    width: 100%;
+}
+.border-l{
+    border-bottom: 4px solid var(--ui-border-color);
+    width: 100%;
+}
+
+.content {
+    padding: 0 4px 0 4px
+}
