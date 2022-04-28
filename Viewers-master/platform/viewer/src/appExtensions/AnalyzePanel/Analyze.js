@@ -52,7 +52,7 @@ export class Analyze extends Component {
           name="Autre"
           onChange={event => this.handleReasonChange(event)}
         />
-        <Divider>Authorisation du patient</Divider>
+        <Divider>Autorisation du patient</Divider>
         <Checkbox
           id="UC"
           label="Authoriser l'utilisation de la radio pour améliorer l'IA"
@@ -64,13 +64,13 @@ export class Analyze extends Component {
           <Button
             onClick={() => {
               // eslint-disable-next-line react/prop-types
-              this.props.analyze(
-                this.props.activeViewport.StudyInstanceUID,
-                this.props.studies
+              this.props.props.analyze(
+                this.props.props.activeViewport.StudyInstanceUID,
+                this.props.props.studies
               );
             }}
           >
-            TEST
+            Analyze
           </Button>
           {/*<RoundedButtonGroup
             options={[

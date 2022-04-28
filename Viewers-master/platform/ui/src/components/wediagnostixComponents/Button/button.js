@@ -10,11 +10,12 @@ export class Button extends Component {
       <button
         className={'rounded'}
         onClick={() => {
+          console.log('test button on click');
           console.log(this.props);
           this.props.onClick();
         }}
       >
-        Analyser
+        {this.props.children}
       </button>
     );
   }
