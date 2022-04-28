@@ -6,9 +6,16 @@ export class Button extends Component {
     super(props);
   }
   render() {
-    return (<button className={'rounded'} onClick={() => {
-      console.log(this.props)
-      this.props.onClick();
-    }}>Analyser</button>);
+    return (
+      <button
+        className={'rounded'}
+        onClick={() => {
+          console.log(this.props);
+          this.props.onClick();
+        }}
+      >
+        Analyser
+      </button>
+    );
   }
 }
