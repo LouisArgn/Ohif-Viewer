@@ -10,6 +10,7 @@ import { LanguageSwitcher } from './languageSwitcher';
 import { Checkbox } from './wediagnostixComponents/Checkbox'; //CHANGED /!\
 import { Divider } from './wediagnostixComponents/Divider'; //CHANGED /!\
 import { Button } from './wediagnostixComponents/Button'; //CHANGED/!\
+import { Spinner } from './wediagnostixComponents/Spinner';
 
 import { CineDialog } from './cineDialog';
 import { ViewportDownloadForm } from './content/viewportDownloadForm';
@@ -65,4 +66,5 @@ export {
   ErrorPage,
   Divider,
   Button,
+  Spinner,
 };

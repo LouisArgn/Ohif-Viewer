@@ -1,0 +1,46 @@
+.spinnerDiv {
+    position: relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    top:15vh
+}
+.wediagLoader {
+    position: absolute;
+    top: 50px;
+    z-index: 1;
+    height: 238px;
+    width: 247px;
+}
+
+.background_logo {
+    position: absolute;
+    top:51px;
+    height:237px;
+    width:247px;
+    background-color: var(--default-color);
+}
+.loader {
+    z-index: 2;
+    border: 150px solid var(--primary-background-color);
+    border-top: 150px solid transparent;
+    border-radius: 50%;
+    animation: spin 2s linear 0s infinite;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(90deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    75% {
+        transform: rotate(270deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

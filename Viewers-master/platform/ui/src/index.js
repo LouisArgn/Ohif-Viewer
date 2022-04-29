@@ -1,4 +1,5 @@
 import {
+  Spinner,
   Button,
   ContextMenu,
   Checkbox,
@@ -32,7 +33,7 @@ import {
   OHIFModal,
   ErrorBoundary,
   ErrorPage,
-  Divider
+  Divider,
 } from './components';
 import { useDebounce, useMedia } from './hooks';
 
@@ -77,6 +78,7 @@ export {
   // Elements
   ICONS,
   //
+  Spinner,
   Button,
   Divider, //!\ Add divider ther
   Checkbox,
