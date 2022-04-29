@@ -67,10 +67,10 @@ export const Analyze = props => {
               onClick={() => {
                 activateSpinner();
                 // eslint-disable-next-line react/prop-types
-                /*this.props.props.analyze(
-      this.props.props.activeViewport.StudyInstanceUID,
-      this.props.props.studies
-    );*/
+                props.analyze(
+                  props.activeViewport.StudyInstanceUID,
+                  props.studies
+                );
               }}
             >
               Analyze
