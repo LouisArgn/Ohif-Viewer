@@ -11,7 +11,7 @@ export default {
     const ExtendedConnectedResultTable = props => (
       <ResultTable getAiResult={props.getAiResult} />
     );
-    const ExtendedConnectedAnalyzePanel = props => <Analyze props={props} />;
+    const ExtendedConnectedAnalyzePanel = props => <Analyze {...props} />;
     return {
       menuOptions: [
         {

@@ -1,63 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './checkbox.css';
 
-export class Checkbox extends Component {
-  state = {
-    isChecked: false,
-    label: '',
-  };
-  constructor(props) {
-    super(props);
-    this.state.label = props.label;
-    this.state.isChecked = props.isChecked;
-  }
-  toggleCheckboxChange(event) {
-    this.setState(({ isChecked }) => ({
-      isChecked: !isChecked,
-    }));
+export const Checkbox = props => {
+  const [label, setLabel] = useState(props.label);
+  const [isChecked, setChecked] = useState(props.isChecked);
+  const [selector, setSelector] = useState();
 
-    this.props.onChange(event);
-  }
-  render() {
-    const {
-      id,
-      label,
-      type,
-      hasError,
-      name,
-    } = this.props;
-    const checkboxClassname = `
+  const toggleCheckboxChange = event => {
+    setChecked(!isChecked);
+    props.onChange(event);
+  };
+  const { id, type, hasError, name } = props;
+  const checkboxClassname = `
       m-checkbox
       ${type === 'switch' && 'm-checkbox--switch'}
       ${hasError && 'm-checkbox--has-error'}
     `;
 
-    const inputClassname = `
+  const inputClassname = `
       m-checkbox__input
       ${type === 'switch' && 'm-checkbox--switch__input'}
       ${hasError && 'm-checkbox--has-error__input'}
     `;
 
-    const labelClassname = `
+  const labelClassname = `
       m-checkbox__label
       ${type === 'switch' && 'm-checkbox--switch__label'}
     `;
 
-    return (
-      <div className={checkboxClassname}>
-        <input
-          type="checkbox"
-          className={inputClassname}
-          ref={el => (this.selector = el)}
-          id={id}
-          checked={this.state.isChecked}
-          onChange={ (event) => this.toggleCheckboxChange(event) }
-          name={name}
-        />
-        <label className={labelClassname} htmlFor={id}>
-          {label}
-        </label>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={checkboxClassname}>
+      <input
+        type="checkbox"
+        className={inputClassname}
+        ref={el => setSelector(el)}
+        id={id}
+        checked={isChecked}
+        onChange={event => toggleCheckboxChange(event)}
+        name={name}
+      />
+      <label className={labelClassname} htmlFor={id}>
+        {label}
+      </label>
+    </div>
+  );
+};

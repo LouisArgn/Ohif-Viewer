@@ -1,85 +1,84 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox, Divider, Button, Spinner } from '@ohif/ui';
 import './analyzePanel.css';
-export class Analyze extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { examIndication: [], spinner: false };
-  }
-  handleReasonChange(event) {
+export const Analyze = props => {
+  const [examIndication, setExamIndication] = useState([]);
+  const [isSpinnerOpen, setIsSpinnerOpen] = useState(false);
+  useEffect(() => {
+    setIsSpinnerOpen(false);
+  }, [props.isOpen]);
+  const handleReasonChange = event => {
     console.log(event.target.value);
     console.log(event.target.name);
     console.log(event.target.id);
-  }
-  activateSpinner() {
-    this.setState({ spinner: true });
-    console.log(this.state);
-  }
-  render() {
-    // eslint-disable-next-line react/react-in-jsx-scope
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {this.state.spinner ? (
-          <Spinner />
-        ) : (
-          <div>
-            <Divider>Indication de l'examen</Divider>
-            <Checkbox
-              id="BD"
-              label="Bilan dentaire"
-              isChecked={true}
-              onChange={event => this.handleReasonChange(event)}
-              name="Bilan dentaire"
-            />
-            <Checkbox
-              id="BDS"
-              label="Bilan dents de sagesses"
-              name="Bilan dents de sagesses"
-              onChange={event => this.handleReasonChange(event)}
-            />
-            <Checkbox
-              id="RFI"
-              label="Recherche de foyers infectieux"
-              name="Recherche de foyers infectieux"
-              onChange={event => this.handleReasonChange(event)}
-            />
-            <Checkbox
-              id="BO"
-              label="Bilan orthodontique"
-              name="Bilan orthodontique"
-              onChange={event => this.handleReasonChange(event)}
-            />
-            <Checkbox
-              id="Au"
-              label="Autre"
-              name="Autre"
-              onChange={event => this.handleReasonChange(event)}
-            />
-            <Divider>Autorisation du patient</Divider>
-            <Checkbox
-              id="UC"
-              label="Authoriser l'utilisation de la radio pour améliorer l'IA"
-              type="switch"
-              onChange={event => this.handleReasonChange(event)}
-              name={"Authoriser l'utilisation de la radio pour améliorer l'IA"}
-            />
-            <div className={'center'}>
-              <Button
-                onClick={() => {
-                  this.activateSpinner();
-                  // eslint-disable-next-line react/prop-types
-                  /*this.props.props.analyze(
+  };
+  const activateSpinner = () => {
+    setIsSpinnerOpen(true);
+    console.log(props);
+  };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      {isSpinnerOpen ? (
+        <Spinner />
+      ) : (
+        <div>
+          <Divider>Indication de l'examen</Divider>
+          <Checkbox
+            id="BD"
+            label="Bilan dentaire"
+            isChecked={true}
+            onChange={event => handleReasonChange(event)}
+            name="Bilan dentaire"
+          />
+          <Checkbox
+            id="BDS"
+            label="Bilan dents de sagesses"
+            name="Bilan dents de sagesses"
+            onChange={event => handleReasonChange(event)}
+          />
+          <Checkbox
+            id="RFI"
+            label="Recherche de foyers infectieux"
+            name="Recherche de foyers infectieux"
+            onChange={event => handleReasonChange(event)}
+          />
+          <Checkbox
+            id="BO"
+            label="Bilan orthodontique"
+            name="Bilan orthodontique"
+            onChange={event => handleReasonChange(event)}
+          />
+          <Checkbox
+            id="Au"
+            label="Autre"
+            name="Autre"
+            onChange={event => handleReasonChange(event)}
+          />
+          <Divider>Autorisation du patient</Divider>
+          <Checkbox
+            id="UC"
+            label="Authoriser l'utilisation de la radio pour améliorer l'IA"
+            type="switch"
+            onChange={event => handleReasonChange(event)}
+            name={"Authoriser l'utilisation de la radio pour améliorer l'IA"}
+          />
+          <div className={'center'}>
+            <Button
+              onClick={() => {
+                activateSpinner();
+                // eslint-disable-next-line react/prop-types
+                /*this.props.props.analyze(
       this.props.props.activeViewport.StudyInstanceUID,
       this.props.props.studies
     );*/
-                }}
-              >
-                Analyze
-              </Button>
-            </div>
+              }}
+            >
+              Analyze
+            </Button>
           </div>
-        )}
-        {/*<RoundedButtonGroup
+        </div>
+      )}
+      {/*<RoundedButtonGroup
             options={[
               {
                 value: 'Analyze',
@@ -96,7 +95,6 @@ export class Analyze extends Component {
               );
             }}
           />*/}
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
