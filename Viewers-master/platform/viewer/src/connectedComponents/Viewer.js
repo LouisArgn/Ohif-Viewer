@@ -355,7 +355,6 @@ class Viewer extends Component {
               const openKey = `is${sideClicked}SidePanelOpen`;
               const selectedKey = `selected${sideClicked}SidePanel`;
               const updatedState = Object.assign({}, this.state);
-
               const isOpen = updatedState[openKey];
               const prevSelectedPanel = updatedState[selectedKey];
               // RoundedButtonGroup returns `null` if selected button is clicked
@@ -363,9 +362,11 @@ class Viewer extends Component {
                 prevSelectedPanel === selectedPanel || selectedPanel === null;
 
               updatedState[selectedKey] = selectedPanel || prevSelectedPanel;
-
               const isClosedOrShouldClose = !isOpen || isSameSelectedPanel;
               if (isClosedOrShouldClose) {
+                openKey.localeCompare('isLeftSidePanelOpen') === 0
+                  ? (updatedState['isRightSidePanelOpen'] = false)
+                  : (updatedState['isLeftSidePanelOpen'] = false);
                 updatedState[openKey] = !updatedState[openKey];
               }
 
