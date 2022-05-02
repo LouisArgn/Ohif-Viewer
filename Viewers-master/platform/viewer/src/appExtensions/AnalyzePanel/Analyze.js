@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, Divider, Button, Spinner } from '@ohif/ui';
 import './analyzePanel.css';
+
 export const Analyze = props => {
   const [examIndication, setExamIndication] = useState([]);
-  const [isSpinnerOpen, setIsSpinnerOpen] = useState(false);
+  const [isSpinnerOpen, setIsSpinnerOpen] = useState(() => props.getAiResult());
   useEffect(() => {
     setIsSpinnerOpen(false);
   }, [props.isOpen]);
+
+  window.addEventListener("resultReady", () => {
+    console.log("Results are ready");
+    setIsSpinnerOpen(false);
+  });
+
   const handleReasonChange = event => {
     console.log(event.target.value);
     console.log(event.target.name);
@@ -14,8 +21,8 @@ export const Analyze = props => {
   };
   const activateSpinner = () => {
     setIsSpinnerOpen(true);
-    console.log(props);
   };
+  //ipcRenderer.on('are_results_ready', async () => console.log('results ready !!!!!!!!!'));
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {isSpinnerOpen ? (
@@ -67,6 +74,7 @@ export const Analyze = props => {
               onClick={() => {
                 activateSpinner();
                 // eslint-disable-next-line react/prop-types
+                console.log(props);
                 props.analyze(
                   props.activeViewport.StudyInstanceUID,
                   props.studies

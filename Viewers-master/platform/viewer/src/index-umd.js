@@ -25,9 +25,6 @@ function installViewer(
       "No root element found to install viewer. Please add a <div> with the id 'root', or pass a DOM element into the installViewer function."
     );
   }
-
-  console.log(config.routerBasename);
-  console.log(getAiResult);
   return ReactDOM.render(
     <App
       config={config}

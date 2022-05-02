@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, matchPath } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
@@ -22,7 +22,9 @@ import './theme-tide.css';
 // Contexts
 import AppContext from './context/AppContext';
 const CallbackPage = asyncComponent(() =>
-  retryImport(() => import(/* webpackChunkName: "CallbackPage" */ './routes/CallbackPage.js'))
+  retryImport(() =>
+    import(/* webpackChunkName: "CallbackPage" */ './routes/CallbackPage.js')
+  )
 );
 
 class OHIFStandaloneViewer extends Component {
@@ -207,10 +209,17 @@ class OHIFStandaloneViewer extends Component {
                   {match === null ? (
                     <></>
                   ) : (
-                      <ErrorBoundary context={match.url}>
-                        <Component match={match} location={this.props.location} selectedUID={this.props.selectedUID} fileList={this.props.fileList} analyze={this.props.analyze} getAiResult={this.props.getAiResult}/>
-                      </ErrorBoundary>
-                    )}
+                    <ErrorBoundary context={match.url}>
+                      <Component
+                        match={match}
+                        location={this.props.location}
+                        selectedUID={this.props.selectedUID}
+                        fileList={this.props.fileList}
+                        analyze={this.props.analyze}
+                        getAiResult={this.props.getAiResult}
+                      />
+                    </ErrorBoundary>
+                  )}
                 </CSSTransition>
               )}
             </Route>

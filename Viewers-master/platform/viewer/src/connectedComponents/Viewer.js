@@ -291,7 +291,6 @@ class Viewer extends Component {
   render() {
     let VisiblePanelLeft, VisiblePanelRight;
     const panelExtensions = extensionManager.modules[MODULE_TYPES.PANEL];
-
     panelExtensions.forEach(panelExt => {
       panelExt.module.components.forEach(comp => {
         if (comp.id === this.state.selectedRightSidePanel) {
@@ -300,6 +299,10 @@ class Viewer extends Component {
           VisiblePanelLeft = comp.component;
         }
       });
+    });
+    window.addEventListener("resultReady", () => {
+      console.log("Change panel");
+      this.setState({ selectedRightSidePanel: 'results-panel' });
     });
 
     return (

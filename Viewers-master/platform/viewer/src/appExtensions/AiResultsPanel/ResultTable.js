@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableList, TableListItem } from '@ohif/ui';
 
 export const ResultTable = props => {
-  const [aiResult, setAiResult] = useState(() => props.getAiResult());
+  const [aiResult, setAiResult] = useState(props.getAiResult());
   // eslint-disable-next-line react/prop-types
   return (
     <TableList>
