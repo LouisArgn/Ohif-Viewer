@@ -49,6 +49,7 @@
     display: flex;
     justify-content: space-between;
 }
+
 .tableListHeader {
     overflow: unset!important;
 }
@@ -76,8 +77,6 @@
 .tableListItem:hover {
     border: solid var(--active-color);
 }
-
-
 .itemContent {
     font-weight: bold;
     font-size: medium;
@@ -95,4 +94,24 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+}
+
+.generateReport {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.generateReportButton {
+    border-radius: 5px;
+    width: 50%;
+    background-color: transparent;
+    border: 2px solid var(--default-color);
+    color: var(--default-color);
+
+}
+.generateReportButton:hover {
+    border-color: var(--active-color);
+    color: var(--active-color);
 }

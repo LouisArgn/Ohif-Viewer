@@ -38,7 +38,7 @@ export const ResultTable = props => {
   };
 
   const [aiResult, setAiResult] = useState(() =>
-    setValidation(/*testAiResult */ props.getAiResult())
+    setValidation(/*testAiResult  */ props.getAiResult())
   );
   const [showGenerateReport, setShowGenerateReport] = useState(false);
   useEffect(() => {
@@ -124,8 +124,8 @@ export const ResultTable = props => {
         ))}
       </TableList>
       {showGenerateReport ? (
-        <div>
-          <button onClick={() => props.generateReport()}>TEST</button>
+        <div className="generateReport">
+          <button className="generateReportButton" onClick={() => props.generateReport()}> Generer le rapport </button>
         </div>
       ) : null}
     </div>
