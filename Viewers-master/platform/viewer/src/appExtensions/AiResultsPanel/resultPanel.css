@@ -49,6 +49,10 @@
     display: flex;
     justify-content: space-between;
 }
+.tableListItem:hover {
+    border: solid var(--active-color);
+}
+
 .itemContent {
     font-weight: bold;
     font-size: medium;
