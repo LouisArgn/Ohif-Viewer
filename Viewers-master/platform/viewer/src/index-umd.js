@@ -15,6 +15,9 @@ function installViewer(
   selectedUID = (uid, list) => {},
   analyze = uid => {},
   getAiResult = () => {},
+  setValidatedResult = validatedResult => {},
+  setReportReason = reason => {},
+  generateReport = () => {},
   fileList = undefined
 ) {
   const container = document.getElementById(containerId);
@@ -32,6 +35,9 @@ function installViewer(
       selectedUID={selectedUID}
       analyze={analyze}
       getAiResult={getAiResult}
+      setValidatedResult={setValidatedResult}
+      setReportReason={setReportReason}
+      generateReport={generateReport}
     />,
     container,
     callback

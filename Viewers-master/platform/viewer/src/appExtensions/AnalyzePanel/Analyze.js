@@ -1,23 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, Divider, Button, Spinner } from '@ohif/ui';
 import './analyzePanel.css';
-
+const examIndicationsValues = [
+  {
+    id: 'BD',
+    name: 'Bilan dentaire',
+    isChecked: true,
+  },
+  {
+    id: 'BDS',
+    name: 'Bilan dents de sagesses',
+    isChecked: false,
+  },
+  {
+    id: 'RFI',
+    name: 'Recherche de foyers infectieux',
+    isChecked: false,
+  },
+  {
+    id: 'UC',
+    name: "Authoriser l'utilisation de la radio pour améliorer l'IA",
+    isChecked: false,
+  },
+];
 export const Analyze = props => {
-  const [examIndication, setExamIndication] = useState([]);
-  const [isSpinnerOpen, setIsSpinnerOpen] = useState(() => props.getAiResult());
+  const [examIndication, setExamIndication] = useState(examIndicationsValues);
+  const [isSpinnerOpen, setIsSpinnerOpen] = useState(false);
   useEffect(() => {
     setIsSpinnerOpen(false);
   }, [props.isOpen]);
 
-  window.addEventListener("resultReady", () => {
-    console.log("Results are ready");
+  window.addEventListener('resultReady', () => {
+    console.log('Results are ready');
     setIsSpinnerOpen(false);
   });
 
   const handleReasonChange = event => {
-    console.log(event.target.value);
-    console.log(event.target.name);
-    console.log(event.target.id);
+    let tmp = examIndication;
+    tmp.forEach(elem => {
+      if (elem.id === event.target.id) {
+        elem.isChecked = !elem.isChecked;
+      }
+    });
+    setExamIndication(tmp);
   };
   const activateSpinner = () => {
     setIsSpinnerOpen(true);
@@ -73,8 +98,8 @@ export const Analyze = props => {
             <Button
               onClick={() => {
                 activateSpinner();
+                props.setReportReason(examIndication);
                 // eslint-disable-next-line react/prop-types
-                console.log(props);
                 props.analyze(
                   props.activeViewport.StudyInstanceUID,
                   props.studies

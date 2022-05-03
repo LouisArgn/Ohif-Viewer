@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableList, TableListItem, Icon } from '@ohif/ui';
 import './resultPanel.css';
 const testAiResult = [
@@ -22,7 +22,6 @@ const testAiResult = [
     teeth: 18,
     translation: { FR: 'Une dents mais moche' },
   },
-
 ];
 export const ResultTable = props => {
   const setValidation = list => {
@@ -30,10 +29,24 @@ export const ResultTable = props => {
       return { ...elem, isValidate: undefined };
     });
   };
+  const checkValidation = list => {
+    let complete = true;
+    list.forEach(elem => {
+      if (elem.isValidate === undefined) complete = false;
+    });
+    return complete;
+  };
 
   const [aiResult, setAiResult] = useState(() =>
-    setValidation(testAiResult /*props.getAiResult()*/)
+    setValidation(/*testAiResult */ props.getAiResult())
   );
+  const [showGenerateReport, setShowGenerateReport] = useState(false);
+  useEffect(() => {
+    if (checkValidation(aiResult)) {
+      setShowGenerateReport(true);
+      props.setValidatedResult(aiResult);
+    }
+  }, [aiResult]);
 
   const validate = (isValidate, id) => {
     let tmp = [...aiResult];
@@ -110,9 +123,11 @@ export const ResultTable = props => {
           </TableListItem>
         ))}
       </TableList>
-      <div>
-        <button onClick={() => console.log('mes grosse voeapfig')}>TEST</button>
-      </div>
+      {showGenerateReport ? (
+        <div>
+          <button onClick={() => props.generateReport()}>TEST</button>
+        </div>
+      ) : null}
     </div>
   );
 };

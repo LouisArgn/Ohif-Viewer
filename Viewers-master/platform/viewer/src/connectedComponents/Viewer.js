@@ -22,6 +22,7 @@ import AppContext from '../context/AppContext';
 import './Viewer.css';
 import StudyPrefetcher from '../components/StudyPrefetcher.js';
 import StudyLoadingMonitor from '../components/StudyLoadingMonitor';
+import { ResultTable } from "../appExtensions/AiResultsPanel/ResultTable";
 
 const { studyMetadataManager } = OHIF.utils;
 
@@ -457,6 +458,9 @@ class Viewer extends Component {
                   getActiveViewport={this._getActiveViewport}
                   getAiResult={this.props.getAiResult}
                   analyze={this.props.analyze}
+                  setValidatedResult={this.props.setValidatedResult}
+                  generateReport={this.props.generateReport}
+                  setReportReason={this.props.setReportReason}
                 />
               )}
             </SidePanel>

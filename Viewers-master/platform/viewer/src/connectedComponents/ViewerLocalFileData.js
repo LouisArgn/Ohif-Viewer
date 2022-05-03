@@ -3,7 +3,7 @@ import { metadata, utils } from '@ohif/core';
 
 import ConnectedViewer from './ConnectedViewer.js';
 import PropTypes from 'prop-types';
-import { extensionManager } from './../App.js';
+import App, { extensionManager } from './../App.js';
 import Dropzone from 'react-dropzone';
 import filesToStudies from '../lib/filesToStudies';
 import './ViewerLocalFileData.css';
@@ -135,6 +135,9 @@ class ViewerLocalFileData extends Component {
                 selectedUID={this.props.selectedUID}
                 analyze={this.props.analyze}
                 getAiResult={this.props.getAiResult}
+                setValidatedResult={this.props.setValidatedResult}
+                setReportReason={this.props.setReportReason}
+                generateReport={this.props.generateReport}
                 studies={this.state.studies}
                 studyInstanceUIDs={
                   this.state.studies &&

@@ -21,6 +21,7 @@ import './variables.css';
 import './theme-tide.css';
 // Contexts
 import AppContext from './context/AppContext';
+import App from "./App";
 const CallbackPage = asyncComponent(() =>
   retryImport(() =>
     import(/* webpackChunkName: "CallbackPage" */ './routes/CallbackPage.js')
@@ -217,6 +218,9 @@ class OHIFStandaloneViewer extends Component {
                         fileList={this.props.fileList}
                         analyze={this.props.analyze}
                         getAiResult={this.props.getAiResult}
+                        setValidatedResult={this.props.setValidatedResult}
+                        setReportReason={this.props.setReportReason}
+                        generateReport={this.props.generateReport}
                       />
                     </ErrorBoundary>
                   )}

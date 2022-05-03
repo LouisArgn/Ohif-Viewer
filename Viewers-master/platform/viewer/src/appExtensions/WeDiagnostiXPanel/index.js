@@ -1,6 +1,7 @@
 import React from 'react';
 import { ResultTable } from '../AiResultsPanel/ResultTable.js';
 import { Analyze } from '../AnalyzePanel/Analyze.js';
+import App from '../../App';
 
 export default {
   id: 'wediagnostix-table',
@@ -9,7 +10,11 @@ export default {
   },
   getPanelModule({ servicesManager, commandsManager }) {
     const ExtendedConnectedResultTable = props => (
-      <ResultTable getAiResult={props.getAiResult} />
+      <ResultTable
+        getAiResult={props.getAiResult}
+        setValidatedResult={props.setValidatedResult}
+        generateReport={props.generateReport}
+      />
     );
     const ExtendedConnectedAnalyzePanel = props => <Analyze {...props} />;
     return {

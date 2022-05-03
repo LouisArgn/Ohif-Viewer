@@ -229,6 +229,9 @@ class App extends Component {
                             selectedUID={this.props.selectedUID}
                             analyze={this.props.analyze}
                             getAiResult={this.props.getAiResult}
+                            setValidatedResult={this.props.setValidatedResult}
+                            setReportReason={this.props.setReportReason}
+                            generateReport={this.props.generateReport}
                           />
                         </ModalProvider>
                       </DialogProvider>
