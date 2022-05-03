@@ -9,7 +9,7 @@ export default {
   },
   getPanelModule({ servicesManager, commandsManager }) {
     const ExtendedConnectedResultTable = props => (
-      <ResultTable getAiResult={props.getAiResult} />
+      <ResultTable /*getAiResult={props.getAiResult}*/ />
     );
     const ExtendedConnectedAnalyzePanel = props => <Analyze {...props} />;
     return {

@@ -1,0 +1,55 @@
+.validationButton {
+    fill: var(--default-color);
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+}
+.validationButton:hover {
+    fill: var(--active-color);
+}
+
+.trashButton {
+    fill: var(--default-color);
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+}
+
+.trashButton:hover {
+    fill: var(--active-color);
+}
+
+.buttonDiv {
+    display: flex;
+    margin-right: 5px;
+}
+
+.validationDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.editDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editButton {
+    fill: var(--default-color);
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+}
+.editButton:hover {
+    fill: var(--active-color);
+}
+
+.resultContent {
+    display: flex;
+    justify-content: space-between;
+}
+.itemContent {
+    font-weight: bold;
+    font-size: medium;
+}
