@@ -36,12 +36,13 @@ export const Analyze = props => {
   });
 
   const handleReasonChange = event => {
-    let tmp = examIndication;
+    let tmp = [...examIndication];
     tmp.forEach(elem => {
       if (elem.id === event.target.id) {
         elem.isChecked = !elem.isChecked;
       }
     });
+    console.log(tmp)
     setExamIndication(tmp);
   };
   const activateSpinner = () => {
