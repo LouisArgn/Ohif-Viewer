@@ -20,7 +20,7 @@ const examIndicationsValues = [
   {
     id: 'UC',
     name: "Authoriser l'utilisation de la radio pour améliorer l'IA",
-    isChecked: false,
+    isChecked: true,
   },
 ];
 export const Analyze = props => {
@@ -91,6 +91,7 @@ export const Analyze = props => {
             id="UC"
             label="Authoriser l'utilisation de la radio pour améliorer l'IA"
             type="switch"
+            isChecked={true}
             onChange={event => handleReasonChange(event)}
             name={"Authoriser l'utilisation de la radio pour améliorer l'IA"}
           />
