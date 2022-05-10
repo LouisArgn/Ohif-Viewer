@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { TableList, TableListItem, Icon } from '@ohif/ui';
+import Select from 'react-select';
+import { TableList, TableListItem, Icon, OHIFModal } from '@ohif/ui';
+import makeAnimated from 'react-select/animated';
 import './resultPanel.css';
+
 const testAiResult = [
   {
     id: 1,
@@ -36,17 +39,48 @@ export const ResultTable = props => {
     });
     return complete;
   };
+  const customStyles = {
+    menu: (provided, state) => ({
+      ...provided,
+      width: state.selectProps.width,
+      borderBottom: '1px dotted pink',
+      color: 'blue',
+      padding: 20,
+    }),
+    control: (_, { selectProps: { width } }) => ({
+      width: width,
+      backgroundColor: 'unset',
+    }),
+    container: (provided, state) => ({
+      ...provided,
+      width: '100vw',
+    }),
 
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+
+      return { ...provided, opacity, transition };
+    },
+  };
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+  const animatedComponents = makeAnimated();
+  const [selectedOption, setSelectedOption] = useState(null);
   const [aiResult, setAiResult] = useState(() =>
-    setValidation(/*testAiResult  */ props.getAiResult())
+    setValidation(testAiResult /* props.getAiResult()*/)
   );
   const [showGenerateReport, setShowGenerateReport] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     if (checkValidation(aiResult)) {
       setShowGenerateReport(true);
       props.setValidatedResult(aiResult);
     }
-  }, [aiResult]);
+  }, [aiResult, props]);
 
   const validate = (isValidate, id) => {
     let tmp = [...aiResult];
@@ -54,6 +88,10 @@ export const ResultTable = props => {
       if (elem.id === id) elem.isValidate = isValidate;
     });
     setAiResult(tmp);
+  };
+
+  const edit = id => {
+    setIsModalOpen(true);
   };
 
   /** Add the key, value pair  {isValidate: boolean} on each elem in list**/
@@ -94,6 +132,7 @@ export const ResultTable = props => {
                       onClick={event => {
                         event.stopPropagation();
                         console.log('edit' + res.teeth);
+                        edit(res.id);
                       }}
                     />
                   </div>
@@ -123,9 +162,44 @@ export const ResultTable = props => {
           </TableListItem>
         ))}
       </TableList>
+      <OHIFModal
+        title="Modify result"
+        shouldCloseOnEsc={true}
+        closeButton={true}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        style={{ overflow: 'unset', width: '60vw' }}
+      >
+        <div style={{ display: 'flex', margin: '10px', width: '50%' }}>
+          <label style={{ margin: '10px' }}>Dent / Zones</label>
+          <Select
+            style={customStyles}
+            closeMenuOnSelect={false}
+            isMulti
+            value={selectedOption}
+            onChange={(value)=>setSelectedOption(value)}
+            options={options}
+            components={animatedComponents}
+          />
+        </div>
+        <div style={{ display: 'flex', margin: '10px', width: '75%' }}>
+          <label style={{ margin: '10px' }}>Description</label>
+          <input
+            style={{ backgroundColor: 'transparent' }}
+            title="teeth"
+            name="Dent"
+          />
+        </div>
+      </OHIFModal>
       {showGenerateReport ? (
         <div className="generateReport">
-          <button className="generateReportButton" onClick={() => props.generateReport()}> Generer le rapport </button>
+          <button
+            className="generateReportButton"
+            onClick={() => props.generateReport()}
+          >
+            {' '}
+            Generer le rapport{' '}
+          </button>
         </div>
       ) : null}
     </div>
