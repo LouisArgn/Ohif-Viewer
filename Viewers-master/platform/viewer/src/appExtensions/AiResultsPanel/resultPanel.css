@@ -1,5 +1,14 @@
-.css-2b097c-container {
-    width: 100% !important;
+.editInput {
+    background-color: transparent;
+    color: var(--default-color);
+    width: 75%;
+    border-radius: 4px;
+    border-color: var(--ui-border-color);
+}
+.editInput:focus {
+    outline: none !important;
+    border:1px solid var(--ui-border-color-active);
+    box-shadow: 0 0 10px #719ECE;
 }
 .OHIFModal {
     width: 65vh;

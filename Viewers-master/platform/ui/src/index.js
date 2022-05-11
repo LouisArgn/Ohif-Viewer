@@ -1,4 +1,5 @@
 import {
+  ResultModificationModal,
   Spinner,
   Button,
   ContextMenu,
@@ -146,4 +147,5 @@ export {
   ViewerbaseDragDropContext,
   asyncComponent,
   retryImport,
+  ResultModificationModal
 };

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
-import { TableList, TableListItem, Icon, OHIFModal } from '@ohif/ui';
-import makeAnimated from 'react-select/animated';
+import { TableList, TableListItem, Icon, OHIFModal, Button } from '@ohif/ui';
 import './resultPanel.css';
+import { ResultModificationModal } from '@ohif/ui/src/components/wediagnostixComponents/ResultModificationModal/resultModificationModal';
 
 const testAiResult = [
   {
@@ -39,42 +38,18 @@ export const ResultTable = props => {
     });
     return complete;
   };
-  const customStyles = {
-    menu: (provided, state) => ({
-      ...provided,
-      width: state.selectProps.width,
-      borderBottom: '1px dotted pink',
-      color: 'blue',
-      padding: 20,
-    }),
-    control: (_, { selectProps: { width } }) => ({
-      width: width,
-      backgroundColor: 'unset',
-    }),
-    container: (provided, state) => ({
-      ...provided,
-      width: '100vw',
-    }),
-
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-
-      return { ...provided, opacity, transition };
-    },
-  };
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
-  const animatedComponents = makeAnimated();
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [aiResult, setAiResult] = useState(() =>
-    setValidation(testAiResult /* props.getAiResult()*/)
-  );
+  const [selectedResult, setSelectedResult] = useState({
+    id: -1,
+    teeth: -1,
+    translation: { FR: '' },
+  });
+  const [aiResult, setAiResult] = useState(() => {
+    console.log('test');
+    return setValidation(/*testAiResult*/ props.getAiResult());
+  });
   const [showGenerateReport, setShowGenerateReport] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     if (checkValidation(aiResult)) {
       setShowGenerateReport(true);
@@ -90,10 +65,41 @@ export const ResultTable = props => {
     setAiResult(tmp);
   };
 
-  const edit = id => {
+  const edit = res => {
+    setSelectedResult({
+      id: res.id,
+      teeth: res.teeth,
+      translation: res.translation,
+    });
     setIsModalOpen(true);
   };
 
+  const handleSave = modifiedResult => {
+    console.log('saving change');
+    const modifiedResultList = aiResult.map(result => {
+      if (result.id === modifiedResult.id) {
+        const tmp = {
+          Zones: [],
+          anatomy: [],
+          id: modifiedResult.id,
+          isValidate: true,
+          pos: {},
+          show_on_image: false,
+          show_on_report: result.show_on_report,
+          subtype: '-1',
+          teeth: modifiedResult.teeth,
+          translation: { FR: modifiedResult.translation.FR }, //TODO change the translation corresponding to the current language used by the app
+          type: '',
+        };
+        console.log(tmp);
+        return tmp;
+      }
+      console.log(result);
+      return result;
+    });
+    console.log(modifiedResultList);
+    setAiResult(modifiedResultList);
+  };
   /** Add the key, value pair  {isValidate: boolean} on each elem in list**/
 
   // eslint-disable-next-line react/prop-types
@@ -132,7 +138,7 @@ export const ResultTable = props => {
                       onClick={event => {
                         event.stopPropagation();
                         console.log('edit' + res.teeth);
-                        edit(res.id);
+                        edit({ ...res });
                       }}
                     />
                   </div>
@@ -162,35 +168,12 @@ export const ResultTable = props => {
           </TableListItem>
         ))}
       </TableList>
-      <OHIFModal
-        title="Modify result"
-        shouldCloseOnEsc={true}
-        closeButton={true}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        style={{ overflow: 'unset', width: '60vw' }}
-      >
-        <div style={{ display: 'flex', margin: '10px', width: '50%' }}>
-          <label style={{ margin: '10px' }}>Dent / Zones</label>
-          <Select
-            style={customStyles}
-            closeMenuOnSelect={false}
-            isMulti
-            value={selectedOption}
-            onChange={(value)=>setSelectedOption(value)}
-            options={options}
-            components={animatedComponents}
-          />
-        </div>
-        <div style={{ display: 'flex', margin: '10px', width: '75%' }}>
-          <label style={{ margin: '10px' }}>Description</label>
-          <input
-            style={{ backgroundColor: 'transparent' }}
-            title="teeth"
-            name="Dent"
-          />
-        </div>
-      </OHIFModal>
+      <ResultModificationModal
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+        handleSave={handleSave}
+        selectedResult={selectedResult}
+      />
       {showGenerateReport ? (
         <div className="generateReport">
           <button
