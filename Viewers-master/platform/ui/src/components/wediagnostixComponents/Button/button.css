@@ -1,10 +1,13 @@
 
 .rounded {
     border-radius: 25px;
-    background-color: var(--default-color);
     width: 100px;
     height: 30px;
+    background-color: transparent;
+    border: 2px solid var(--default-color);
+    color: var(--default-color);
 }
 .rounded:hover {
-    background-color: var(--active-color);
+    border-color: var(--active-color);
+    color: var(--active-color);
 }

@@ -301,11 +301,6 @@ class Viewer extends Component {
         }
       });
     });
-    window.addEventListener("resultReady", () => {
-      console.log("Change panel");
-      this.setState({ selectedRightSidePanel: 'results-panel' });
-    });
-
     return (
       <>
         {/* HEADER */}

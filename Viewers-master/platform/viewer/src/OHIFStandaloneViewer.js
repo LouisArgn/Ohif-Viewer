@@ -21,7 +21,6 @@ import './variables.css';
 import './theme-tide.css';
 // Contexts
 import AppContext from './context/AppContext';
-import App from "./App";
 const CallbackPage = asyncComponent(() =>
   retryImport(() =>
     import(/* webpackChunkName: "CallbackPage" */ './routes/CallbackPage.js')
