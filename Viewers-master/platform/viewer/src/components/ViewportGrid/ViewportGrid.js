@@ -85,7 +85,7 @@ const ViewportGrid = function(props) {
         defaultPluginName
       );
 
-      return (
+      return ( //Et de la après
         <ViewportPane
           onDrop={setViewportData}
           viewportIndex={viewportIndex} // Needed by `setViewportData`
@@ -110,7 +110,7 @@ const ViewportGrid = function(props) {
     activeViewportIndex,
   ]);
 
-  return (
+  return ( //ViewPort (affichage de la radio au milieu, ça part de la)
     <div
       data-cy="viewprt-grid"
       style={{
@@ -175,7 +175,9 @@ function _getViewportComponent(
   if (viewportData.displaySet) {
     pluginName = pluginName || defaultPluginName;
     const ViewportComponent = availablePlugins[pluginName];
-
+    console.log('test')
+    console.log(pluginName);
+    console.log(ViewportComponent)
     if (!ViewportComponent) {
       throw new Error(
         `No Viewport Component available for name ${pluginName}.
@@ -183,7 +185,7 @@ function _getViewportComponent(
       );
     }
 
-    return (
+    return (//et en troisième ça va la
       <ViewportComponent
         viewportData={viewportData}
         viewportIndex={viewportIndex}

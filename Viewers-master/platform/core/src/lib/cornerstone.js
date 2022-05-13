@@ -61,7 +61,6 @@ function pixelToPage(element, position) {
   }
 
   const canvas = enabledElement.canvas;
-
   const canvasOffset = $(canvas).offset();
   result.x += canvasOffset.left;
   result.y += canvasOffset.top;

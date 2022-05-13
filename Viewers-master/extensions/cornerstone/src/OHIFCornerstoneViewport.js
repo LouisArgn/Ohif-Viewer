@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef, useEffect } from 'react';
 
 import OHIFCornerstoneViewportOverlay from './components/OHIFCornerstoneViewportOverlay';
 import ConnectedCornerstoneViewport from './ConnectedCornerstoneViewport';
@@ -6,12 +6,15 @@ import OHIF from '@ohif/core';
 import PropTypes from 'prop-types';
 import cornerstone from 'cornerstone-core';
 import checkForSRAnnotations from './tools/checkForSRAnnotations';
+//import { fabric } from 'fabric';
 
 const { StackManager } = OHIF.utils;
 
 class OHIFCornerstoneViewport extends Component {
   state = {
     viewportData: null,
+    canvasRef: null,
+    Canvas: null,
   };
 
   static defaultProps = {
@@ -192,6 +195,13 @@ class OHIFCornerstoneViewport extends Component {
       checkForSRAnnotations({ displaySet, viewportIndex });
       this.setStateFromProps();
     }
+    var height = document.getElementById("containerDiv").offsetHeight
+    var width = document.getElementById("containerDiv").offsetWidth
+    console.log('test setting width on update');
+    document.getElementById("c").setAttribute("width", width.toString())
+    document
+      .getElementById('c')
+      .setAttribute('height', height.toString());
   }
 
   render() {
@@ -246,26 +256,91 @@ class OHIFCornerstoneViewport extends Component {
       );
     };
 
+    /*const myCanvas = props => {
+      console.log('test0');
+
+      Canvas.setHeight(300);
+      Canvas.setWidth(300);
+      fabric.textureSize = 4096;
+      fabric.Object.prototype.set({
+        padding: 10,
+        margin: 10,
+      });
+      console.log('test1');
+      const cir = new fabric.Circle({
+        left: 0,//pos.x * ratio,
+        top: 0,//pos.y * ratio,
+        radius: 20,//size * ratio,
+        fill: 'rgba(0, 0, 0, 0)',
+        hasControls: false,
+        movable: false,
+        selectable: false,
+      });
+      console.log('test2');
+      Canvas.add(cir);
+      return Canvas;
+    };*/
+
+    let x = 0;
+    let y = 0;
     return (
-      <>
-        <ConnectedCornerstoneViewport
-          viewportIndex={viewportIndex}
-          imageIds={imageIds}
-          imageIdIndex={currentImageIdIndex}
-          onNewImageDebounced={newImageHandler}
-          onNewImageDebounceTime={300}
-          viewportOverlayComponent={warningsOverlay}
-          stackPrefetch={this.props.stackPrefetch}
-          isStackPrefetchEnabled={this.props.isStackPrefetchEnabled}
-          // ~~ Connected (From REDUX)
-          // frameRate={frameRate}
-          // isPlaying={false}
-          // onElementEnabled={() => {}}
-          // setViewportActive{() => {}}
-          {...this.props.customProps}
-        />
-        {childrenWithProps}
-      </>
+      <div id="containerDiv" style={{ height: '100%', position: 'relative' }}>
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            top: '0px',
+            zIndex: 1,
+            pointerEvents: 'none',
+          }}
+        >
+          <canvas id="c" />
+          <button
+            id="circ"
+            style={{
+              position: 'absolute',
+              left: 0}}
+            onClick={() => {
+              console.log(document.getElementById('containerDiv').offsetHeight);
+              var canvas = document.getElementById('c');
+              var ctx = canvas.getContext('2d');
+              ctx.strokeStyle = 'rgb(0,175,155)';
+              ctx.strokeRect(500, 500, 100, 100);
+              x++;
+              y++;
+            }}
+          >
+            TEST
+          </button>
+        </div>
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            top: '0px',
+          }}
+        >
+          <ConnectedCornerstoneViewport
+            viewportIndex={viewportIndex}
+            imageIds={imageIds}
+            imageIdIndex={currentImageIdIndex}
+            onNewImageDebounced={newImageHandler}
+            onNewImageDebounceTime={300}
+            viewportOverlayComponent={warningsOverlay}
+            stackPrefetch={this.props.stackPrefetch}
+            isStackPrefetchEnabled={this.props.isStackPrefetchEnabled}
+            // ~~ Connected (From REDUX)
+            // frameRate={frameRate}
+            // isPlaying={false}
+            // onElementEnabled={() => {}}
+            // setViewportActive{() => {}}
+            {...this.props.customProps}
+          />
+          {childrenWithProps}
+        </div>
+      </div>
     );
   }
 }
