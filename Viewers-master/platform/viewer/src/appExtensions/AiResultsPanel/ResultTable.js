@@ -113,6 +113,8 @@ export const ResultTable = props => {
             onItemClick={event => {
               event.stopPropagation();
               console.log('ok boy: ' + res.teeth);
+              console.log(document.getElementById('viewport-wrapper'));
+              console.log(document.getElementById('viewport-element'));
             }}
             itemKey={res.id}
             itemMeta={res.teeth}

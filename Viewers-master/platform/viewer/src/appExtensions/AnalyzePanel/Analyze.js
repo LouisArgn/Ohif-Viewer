@@ -42,7 +42,7 @@ export const Analyze = props => {
         elem.isChecked = !elem.isChecked;
       }
     });
-    console.log(tmp)
+    console.log(tmp);
     setExamIndication(tmp);
   };
   const activateSpinner = () => {

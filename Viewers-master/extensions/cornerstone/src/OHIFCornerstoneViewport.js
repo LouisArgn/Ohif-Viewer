@@ -15,6 +15,11 @@ class OHIFCornerstoneViewport extends Component {
     viewportData: null,
     canvasRef: null,
     Canvas: null,
+    originalHeight: -1,
+    originalWidth: -1,
+    imageHeight: -1,
+    imageWidth: -1,
+    dimensionsReady: false,
   };
 
   static defaultProps = {
@@ -179,9 +184,24 @@ class OHIFCornerstoneViewport extends Component {
 
   componentDidMount() {
     this.setStateFromProps();
+    this.setState({ dimensionsReady: false });
+    window.addEventListener('resultReady', () => {
+      console.log("let's get some image dimensions");
+      this.setState({ dimensionsReady: true });
+    });
+  }
+  setDimensions() {
+    var height = document.getElementById('containerDiv').offsetHeight;
+    var width = document.getElementById('containerDiv').offsetWidth;
+    document.getElementById('c').setAttribute('width', width.toString());
+    document.getElementById('c').setAttribute('height', height.toString());
   }
 
-  componentDidUpdate(prevProps) {
+  accessibilityFunctionTest(str) {
+    console.log(str);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     const { displaySet } = this.props.viewportData;
     const prevDisplaySet = prevProps.viewportData.displaySet;
 
@@ -195,13 +215,7 @@ class OHIFCornerstoneViewport extends Component {
       checkForSRAnnotations({ displaySet, viewportIndex });
       this.setStateFromProps();
     }
-    var height = document.getElementById("containerDiv").offsetHeight
-    var width = document.getElementById("containerDiv").offsetWidth
-    console.log('test setting width on update');
-    document.getElementById("c").setAttribute("width", width.toString())
-    document
-      .getElementById('c')
-      .setAttribute('height', height.toString());
+    if (this.state.dimensionsReady) this.setDimensions();
   }
 
   render() {
@@ -299,19 +313,26 @@ class OHIFCornerstoneViewport extends Component {
           <button
             id="circ"
             style={{
+              pointerEvents: 'all',
               position: 'absolute',
-              left: 0}}
+              left: 0,
+            }}
             onClick={() => {
-              console.log(document.getElementById('containerDiv').offsetHeight);
               var canvas = document.getElementById('c');
               var ctx = canvas.getContext('2d');
+              var height = document.getElementById('containerDiv').offsetHeight;
+              var width = document.getElementById('containerDiv').offsetWidth;
               ctx.strokeStyle = 'rgb(0,175,155)';
-              ctx.strokeRect(500, 500, 100, 100);
+              var center = { x: width / 2, y: height / 2 };
+/*              ctx.beginPath();
+              ctx.arc(center.x, center.y, 5,0, 2 * Math.PI);
+              ctx.stroke();*/
+              ctx.strokeRect(width / 2 - 50, height / 2 - 50, 100, 100);
               x++;
               y++;
             }}
           >
-            TEST
+            DRAW CENTER
           </button>
         </div>
         <div
