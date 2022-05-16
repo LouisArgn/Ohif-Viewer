@@ -1,4 +1,4 @@
-import React, { Component, createRef, useEffect } from 'react';
+import React, { Component, useEffect } from 'react';
 
 import OHIFCornerstoneViewportOverlay from './components/OHIFCornerstoneViewportOverlay';
 import ConnectedCornerstoneViewport from './ConnectedCornerstoneViewport';
@@ -17,9 +17,10 @@ class OHIFCornerstoneViewport extends Component {
     Canvas: null,
     originalHeight: -1,
     originalWidth: -1,
-    imageHeight: -1,
-    imageWidth: -1,
-    dimensionsReady: false,
+    containerHeight: -1,
+    containerWidth: -1,
+    diseasesPosReady: false,
+    diseasesPos: [],
   };
 
   static defaultProps = {
@@ -185,20 +186,49 @@ class OHIFCornerstoneViewport extends Component {
   componentDidMount() {
     this.setStateFromProps();
     this.setState({ dimensionsReady: false });
-    window.addEventListener('resultReady', () => {
+    console.log(this.props);
+    console.log(this.state);
+    window.addEventListener('setDimensions', event => {
+      console.log('setDimensions');
+      console.log(event);
+      this.setState({
+        originalHeight: event.detail.height,
+        originalWidth: event.detail.width,
+      });
+    });
+    window.addEventListener('setResultCoordinates', event => {
       console.log("let's get some image dimensions");
-      this.setState({ dimensionsReady: true });
+      console.log(event);
+      this.setState({ diseasesPosReady: true });
+      this.setState({ diseasesPos: event.detail });
     });
   }
   setDimensions() {
-    var height = document.getElementById('containerDiv').offsetHeight;
-    var width = document.getElementById('containerDiv').offsetWidth;
-    document.getElementById('c').setAttribute('width', width.toString());
-    document.getElementById('c').setAttribute('height', height.toString());
-  }
-
-  accessibilityFunctionTest(str) {
-    console.log(str);
+    let containerHeight = document.getElementById('containerDiv').offsetHeight;
+    let containerWidth = document.getElementById('containerDiv').offsetWidth;
+    let canvasHeight = document.getElementById('c').offsetHeight;
+    let canvasWidth = document.getElementById('c').offsetWidth;
+    console.log('setDimensions function');
+    console.log(containerWidth);
+    console.log(containerHeight);
+    console.log(canvasHeight);
+    console.log(canvasWidth);
+    if (containerHeight !== canvasHeight || containerWidth !== canvasWidth) {
+      console.log('sizeChanging');
+      document
+        .getElementById('c')
+        .setAttribute('width', containerWidth.toString());
+      document
+        .getElementById('c')
+        .setAttribute('height', containerHeight.toString());
+      var canvas = document.getElementById('c');
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.setState({
+        containerHeight: containerHeight,
+        containerWidth: containerWidth,
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -215,7 +245,63 @@ class OHIFCornerstoneViewport extends Component {
       checkForSRAnnotations({ displaySet, viewportIndex });
       this.setStateFromProps();
     }
-    if (this.state.dimensionsReady) this.setDimensions();
+    if (document.getElementById('containerDiv')) {
+      const resize_ob = new ResizeObserver((entries) => {
+        // since we are observing only a single element, so we access the first element in entries array
+        let rect = entries[0].contentRect;
+
+        // current width & height
+        let width = rect.width;
+        let height = rect.height;
+
+        console.log("Current Width : " + width);
+        console.log("Current Height : " + height);
+        this.setDimensions();
+      });
+      resize_ob.observe(document.querySelector('#containerDiv'));
+    }
+  }
+
+  handleClick() {
+    var canvas = document.getElementById('c');
+    var ctx = canvas.getContext('2d');
+    var height = document.getElementById('containerDiv').offsetHeight;
+    var width = document.getElementById('containerDiv').offsetWidth;
+    ctx.strokeStyle = 'rgb(0,175,155)';
+    console.log(this.state.diseasesPos);
+    console.log(this.state.diseasesPosReady);
+    ctx.strokeRect(0, 0, 100, 100);
+
+    if (!this.state.diseasesPosReady) {
+      var center = { x: width / 2, y: height / 2 };
+      ctx.beginPath();
+      ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
+      ctx.stroke();
+    } else {
+      let ratio =
+        this.state.originalWidth > this.state.containerWidth
+          ? Math.max(
+              this.state.originalWidth / this.state.containerWidth,
+              this.state.originalHeight / this.state.containerHeight
+            )
+          : Math.max(
+              this.state.containerWidth / this.state.originalWidth,
+              this.state.containerHeight / this.state.originalHeight
+            );
+      let offsetWidth =
+        (this.state.containerWidth - this.state.originalWidth / ratio) / 2;
+      let offsetHeight =
+        (this.state.containerHeight - this.state.originalHeight / ratio) / 2;
+      this.state.diseasesPos.forEach(pos => {
+        console.log(pos);
+        ctx.strokeRect(
+          pos.pos.x / ratio + offsetWidth,
+          pos.pos.y / ratio + offsetHeight,
+          pos.pos.width / ratio,
+          pos.pos.height / ratio
+        );
+      });
+    }
   }
 
   render() {
@@ -269,72 +355,8 @@ class OHIFCornerstoneViewport extends Component {
         />
       );
     };
-
-    /*const myCanvas = props => {
-      console.log('test0');
-
-      Canvas.setHeight(300);
-      Canvas.setWidth(300);
-      fabric.textureSize = 4096;
-      fabric.Object.prototype.set({
-        padding: 10,
-        margin: 10,
-      });
-      console.log('test1');
-      const cir = new fabric.Circle({
-        left: 0,//pos.x * ratio,
-        top: 0,//pos.y * ratio,
-        radius: 20,//size * ratio,
-        fill: 'rgba(0, 0, 0, 0)',
-        hasControls: false,
-        movable: false,
-        selectable: false,
-      });
-      console.log('test2');
-      Canvas.add(cir);
-      return Canvas;
-    };*/
-
-    let x = 0;
-    let y = 0;
     return (
       <div id="containerDiv" style={{ height: '100%', position: 'relative' }}>
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            top: '0px',
-            zIndex: 1,
-            pointerEvents: 'none',
-          }}
-        >
-          <canvas id="c" />
-          <button
-            id="circ"
-            style={{
-              pointerEvents: 'all',
-              position: 'absolute',
-              left: 0,
-            }}
-            onClick={() => {
-              var canvas = document.getElementById('c');
-              var ctx = canvas.getContext('2d');
-              var height = document.getElementById('containerDiv').offsetHeight;
-              var width = document.getElementById('containerDiv').offsetWidth;
-              ctx.strokeStyle = 'rgb(0,175,155)';
-              var center = { x: width / 2, y: height / 2 };
-/*              ctx.beginPath();
-              ctx.arc(center.x, center.y, 5,0, 2 * Math.PI);
-              ctx.stroke();*/
-              ctx.strokeRect(width / 2 - 50, height / 2 - 50, 100, 100);
-              x++;
-              y++;
-            }}
-          >
-            DRAW CENTER
-          </button>
-        </div>
         <div
           style={{
             height: '100%',
@@ -360,6 +382,29 @@ class OHIFCornerstoneViewport extends Component {
             {...this.props.customProps}
           />
           {childrenWithProps}
+        </div>
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            top: '0px',
+            zIndex: 1,
+            pointerEvents: 'none',
+          }}
+        >
+          <canvas id="c" />
+          <button
+            id="circ"
+            style={{
+              pointerEvents: 'all',
+              position: 'absolute',
+              left: 0,
+            }}
+            onClick={() => this.handleClick()}
+          >
+            DRAW CENTER
+          </button>
         </div>
       </div>
     );
