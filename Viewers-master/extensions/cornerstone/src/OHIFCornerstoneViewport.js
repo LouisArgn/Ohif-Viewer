@@ -288,8 +288,8 @@ class OHIFCornerstoneViewport extends Component {
         (this.state.containerHeight - this.state.originalHeight / ratio) / 2;
       this.state.diseasesPos.forEach(pos => {
         ctx.clearRect(
-          pos.pos.x / ratio - offsetWidth,
-          pos.pos.y / ratio + offsetHeight,
+          pos.pos.x / ratio - offsetWidth - 5,
+          pos.pos.y / ratio + offsetHeight - 5,
           pos.pos.width / ratio + 10,
           pos.pos.height / ratio + 10
         );
