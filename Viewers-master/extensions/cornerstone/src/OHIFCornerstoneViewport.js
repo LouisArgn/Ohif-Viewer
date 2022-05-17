@@ -21,6 +21,7 @@ class OHIFCornerstoneViewport extends Component {
     containerWidth: -1,
     diseasesPosReady: false,
     diseasesPos: [],
+    isDrawn: false,
   };
 
   static defaultProps = {
@@ -186,21 +187,21 @@ class OHIFCornerstoneViewport extends Component {
   componentDidMount() {
     this.setStateFromProps();
     this.setState({ dimensionsReady: false });
-    console.log(this.props);
-    console.log(this.state);
     window.addEventListener('setDimensions', event => {
-      console.log('setDimensions');
-      console.log(event);
       this.setState({
         originalHeight: event.detail.height,
         originalWidth: event.detail.width,
       });
     });
     window.addEventListener('setResultCoordinates', event => {
-      console.log("let's get some image dimensions");
-      console.log(event);
       this.setState({ diseasesPosReady: true });
       this.setState({ diseasesPos: event.detail });
+    });
+    window.addEventListener('drawRectangle', event => {
+      this.drawRectangle(event.detail.diseaseId);
+    });
+    window.addEventListener('drawOrClear', event => {
+      this.drawOrClear();
     });
   }
   setDimensions() {
@@ -208,13 +209,7 @@ class OHIFCornerstoneViewport extends Component {
     let containerWidth = document.getElementById('containerDiv').offsetWidth;
     let canvasHeight = document.getElementById('c').offsetHeight;
     let canvasWidth = document.getElementById('c').offsetWidth;
-    console.log('setDimensions function');
-    console.log(containerWidth);
-    console.log(containerHeight);
-    console.log(canvasHeight);
-    console.log(canvasWidth);
     if (containerHeight !== canvasHeight || containerWidth !== canvasWidth) {
-      console.log('sizeChanging');
       document
         .getElementById('c')
         .setAttribute('width', containerWidth.toString());
@@ -246,7 +241,7 @@ class OHIFCornerstoneViewport extends Component {
       this.setStateFromProps();
     }
     if (document.getElementById('containerDiv')) {
-      const resize_ob = new ResizeObserver((entries) => {
+      const resize_ob = new ResizeObserver(entries => {
         // since we are observing only a single element, so we access the first element in entries array
         let rect = entries[0].contentRect;
 
@@ -254,30 +249,29 @@ class OHIFCornerstoneViewport extends Component {
         let width = rect.width;
         let height = rect.height;
 
-        console.log("Current Width : " + width);
-        console.log("Current Height : " + height);
+        console.log('Current Width : ' + width);
+        console.log('Current Height : ' + height);
         this.setDimensions();
       });
       resize_ob.observe(document.querySelector('#containerDiv'));
     }
   }
 
-  handleClick() {
+  drawOrClear() {
+    if (this.state.isDrawn) {
+      var canvas = document.getElementById('c');
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.setState({ isDrawn: false });
+    } else this.drawRectangle(undefined);
+  }
+
+  drawRectangle(diseaseId) {
     var canvas = document.getElementById('c');
     var ctx = canvas.getContext('2d');
-    var height = document.getElementById('containerDiv').offsetHeight;
-    var width = document.getElementById('containerDiv').offsetWidth;
-    ctx.strokeStyle = 'rgb(0,175,155)';
-    console.log(this.state.diseasesPos);
-    console.log(this.state.diseasesPosReady);
-    ctx.strokeRect(0, 0, 100, 100);
-
-    if (!this.state.diseasesPosReady) {
-      var center = { x: width / 2, y: height / 2 };
-      ctx.beginPath();
-      ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
-      ctx.stroke();
-    } else {
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(0,175,155,1)';
+    if (this.state.diseasesPosReady) {
       let ratio =
         this.state.originalWidth > this.state.containerWidth
           ? Math.max(
@@ -293,15 +287,34 @@ class OHIFCornerstoneViewport extends Component {
       let offsetHeight =
         (this.state.containerHeight - this.state.originalHeight / ratio) / 2;
       this.state.diseasesPos.forEach(pos => {
-        console.log(pos);
-        ctx.strokeRect(
-          pos.pos.x / ratio + offsetWidth,
+        ctx.clearRect(
+          pos.pos.x / ratio - offsetWidth,
           pos.pos.y / ratio + offsetHeight,
-          pos.pos.width / ratio,
-          pos.pos.height / ratio
+          pos.pos.width / ratio + 10,
+          pos.pos.height / ratio + 10
         );
+        if (diseaseId === undefined || pos.id !== diseaseId) {
+          ctx.strokeRect(
+            pos.pos.x / ratio - offsetWidth,
+            pos.pos.y / ratio + offsetHeight,
+            pos.pos.width / ratio,
+            pos.pos.height / ratio
+          );
+        } else {
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = 'rgba(20,255,146, 1)';
+          ctx.strokeRect(
+            pos.pos.x / ratio - offsetWidth,
+            pos.pos.y / ratio + offsetHeight,
+            pos.pos.width / ratio,
+            pos.pos.height / ratio
+          );
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = 'rgba(0,175,155,1)';
+        }
       });
     }
+    this.setState({ isDrawn: true });
   }
 
   render() {
@@ -394,7 +407,7 @@ class OHIFCornerstoneViewport extends Component {
           }}
         >
           <canvas id="c" />
-          <button
+          {/*<button
             id="circ"
             style={{
               pointerEvents: 'all',
@@ -404,7 +417,7 @@ class OHIFCornerstoneViewport extends Component {
             onClick={() => this.handleClick()}
           >
             DRAW CENTER
-          </button>
+          </button>*/}
         </div>
       </div>
     );

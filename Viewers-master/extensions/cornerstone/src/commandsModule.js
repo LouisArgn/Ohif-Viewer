@@ -68,6 +68,10 @@ const commandsModule = ({ servicesManager }) => {
         cornerstone.reset(enabledElement);
       }
     },
+    drawDiseases: ({ viewports }) => {
+      const event = new CustomEvent('drawOrClear');
+      window.dispatchEvent(event);
+    },
     invertViewport: ({ viewports }) => {
       const enabledElement = getEnabledElement(viewports.activeViewportIndex);
 
@@ -369,6 +373,11 @@ const commandsModule = ({ servicesManager }) => {
     },
     resetViewport: {
       commandFn: actions.resetViewport,
+      storeContexts: ['viewports'],
+      options: {},
+    },
+    drawDiseases: {
+      commandFn: actions.drawDiseases,
       storeContexts: ['viewports'],
       options: {},
     },

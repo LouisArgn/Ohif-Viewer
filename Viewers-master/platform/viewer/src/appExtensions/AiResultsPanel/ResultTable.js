@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TableList, TableListItem, Icon, OHIFModal, Button } from '@ohif/ui';
+import { TableList, TableListItem, Icon } from '@ohif/ui';
 import './resultPanel.css';
 import { ResultModificationModal } from '@ohif/ui/src/components/wediagnostixComponents/ResultModificationModal/resultModificationModal';
 
@@ -113,14 +113,13 @@ export const ResultTable = props => {
             onItemClick={event => {
               event.stopPropagation();
               console.log('ok boy: ' + res.teeth);
-              console.log(document);
-              console.log(props);
-              console.log(
-                document
-                  .getElementById('containerDiv').getAttributeNames()
-              );
-              console.log(document.getElementsByClassName('viewport-wrapper'));
-              console.log(document.getElementsByClassName('viewport-element'));
+              let drawEvent = new CustomEvent('drawRectangle', {
+                detail: {
+                  diseaseId: res.id,
+                },
+              });
+              window.dispatchEvent(drawEvent);
+              setSelectedResult(res);
             }}
             itemKey={res.id}
             itemMeta={res.teeth}
@@ -130,7 +129,9 @@ export const ResultTable = props => {
                 <div
                   className={
                     res.isValidate === undefined
-                      ? 'result'
+                      ? res.id === selectedResult.id
+                        ? 'selectedResult'
+                        : 'result'
                       : res.isValidate
                       ? 'validResult'
                       : 'invalidResult'

@@ -101,7 +101,9 @@
     font-weight: bold;
     font-size: medium;
 }
-
+.selectedResult {
+    color: solid var(--active-color);
+}
 .result{}
 .validResult {
     color: green;

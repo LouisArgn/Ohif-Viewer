@@ -105,17 +105,7 @@ const definitions = [
     //
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'resetViewport',
-  } /*,
-  {
-    id: 'Cine',
-    label: 'CINE',
-    icon: 'youtube',
-    //
-    type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
-    options: {
-      behavior: TOOLBAR_BUTTON_BEHAVIORS.CINE,
-    },
-  }*/,
+  },
   {
     id: 'More',
     label: 'More',
@@ -236,6 +226,14 @@ const definitions = [
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'setCornerstoneLayout',
     context: 'ACTIVE_VIEWPORT::VTK',
+  },
+  {
+    id: 'Result',
+    label: 'Highlight results',
+    icon: 'square-o',
+    //
+    type: TOOLBAR_BUTTON_TYPES.COMMAND,
+    commandName: 'drawDiseases',
   },
 ];
 
