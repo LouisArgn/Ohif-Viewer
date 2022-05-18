@@ -135,6 +135,7 @@ class ViewerLocalFileData extends Component {
                 selectedUID={this.props.selectedUID}
                 analyze={this.props.analyze}
                 getAiResult={this.props.getAiResult}
+                setResultPrecision={this.props.setResultPrecision}
                 setValidatedResult={this.props.setValidatedResult}
                 setReportReason={this.props.setReportReason}
                 generateReport={this.props.generateReport}

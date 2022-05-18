@@ -18,6 +18,7 @@ function installViewer(
   setValidatedResult = validatedResult => {},
   setReportReason = reason => {},
   generateReport = () => {},
+  setResultPrecision = () => {},
   fileList = undefined
 ) {
   const container = document.getElementById(containerId);
@@ -38,6 +39,7 @@ function installViewer(
       setValidatedResult={setValidatedResult}
       setReportReason={setReportReason}
       generateReport={generateReport}
+      setResultPrecision={setResultPrecision}
     />,
     container,
     callback

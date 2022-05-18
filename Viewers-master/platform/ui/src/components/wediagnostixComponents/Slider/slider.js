@@ -7,7 +7,7 @@ export const Slider = props => {
       <input
         id="slider"
         className="slider"
-        defaultValue="2"
+        defaultValue="0"
         type="range"
         min="1"
         max="3"

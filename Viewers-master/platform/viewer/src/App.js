@@ -232,6 +232,7 @@ class App extends Component {
                             setValidatedResult={this.props.setValidatedResult}
                             setReportReason={this.props.setReportReason}
                             generateReport={this.props.generateReport}
+                            setResultPrecision={this.props.setResultPrecision}
                           />
                         </ModalProvider>
                       </DialogProvider>

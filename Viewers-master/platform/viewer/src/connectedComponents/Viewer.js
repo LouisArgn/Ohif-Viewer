@@ -234,6 +234,7 @@ class Viewer extends Component {
       selectedUID,
       analyze,
       getAiResult,
+      setResultPrecision
     } = this.props;
 
     const activeViewport = viewports[activeViewportIndex];
@@ -456,6 +457,7 @@ class Viewer extends Component {
                   setValidatedResult={this.props.setValidatedResult}
                   generateReport={this.props.generateReport}
                   setReportReason={this.props.setReportReason}
+                  setResultPrecision={this.props.setResultPrecision}
                 />
               )}
             </SidePanel>

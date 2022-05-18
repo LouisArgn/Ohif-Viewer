@@ -51,7 +51,8 @@ export const ResultTable = props => {
   });
   const [aiResult, setAiResult] = useState(() => {
     console.log('test');
-    return setValidation(testAiResult /*props.getAiResult()*/);
+    return setValidation(props.getAiResult());
+    // return setValidation(testAiResult);
   });
   const [showGenerateReport, setShowGenerateReport] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,7 +82,11 @@ export const ResultTable = props => {
   };
 
   const handleValueChange = value => {
-    console.log(value);
+    console.log(precisionDict[parseInt(value) - 1]);
+    props.setValidatedResult(aiResult);
+    props.setResultPrecision(precisionDict[parseInt(value) - 1]);
+    setAiResult(props.getAiResult());
+    console.log("test");
   };
 
   const handleSave = modifiedResult => {

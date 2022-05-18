@@ -9,7 +9,7 @@ export default {
   },
   getPanelModule({ servicesManager, commandsManager }) {
     const ExtendedConnectedWediagnostixTable = props => {
-      const [showResult, setShowResult] = useState(true);
+      const [showResult, setShowResult] = useState(false);
       useEffect(() => {
         if (props.isOpen === false) setShowResult(false);
       }, [props.isOpen]);
@@ -22,6 +22,7 @@ export default {
           getAiResult={props.getAiResult}
           setValidatedResult={props.setValidatedResult}
           generateReport={props.generateReport}
+          setResultPrecision={props.setResultPrecision}
         />
       ) : (
         <Analyze {...props} />
