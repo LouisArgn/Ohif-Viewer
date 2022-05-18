@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TableList, TableListItem, Icon } from '@ohif/ui';
+import { TableList, TableListItem, Icon, Slider } from '@ohif/ui';
 import './resultPanel.css';
 import { ResultModificationModal } from '@ohif/ui/src/components/wediagnostixComponents/ResultModificationModal/resultModificationModal';
 
@@ -25,10 +25,16 @@ const testAiResult = [
     translation: { FR: 'Une dents mais moche' },
   },
 ];
+
+const precisionDict = ["Specific", "Optimal", "Sensible"]
 export const ResultTable = props => {
   const setValidation = list => {
     return list.map(elem => {
-      return { ...elem, isValidate: undefined };
+      {
+        return elem.isValidate === undefined
+          ? { ...elem, isValidate: undefined }
+          : elem;
+      }
     });
   };
   const checkValidation = list => {
@@ -45,7 +51,7 @@ export const ResultTable = props => {
   });
   const [aiResult, setAiResult] = useState(() => {
     console.log('test');
-    return setValidation(/*testAiResult*/ props.getAiResult());
+    return setValidation(testAiResult /*props.getAiResult()*/);
   });
   const [showGenerateReport, setShowGenerateReport] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,6 +78,10 @@ export const ResultTable = props => {
       translation: res.translation,
     });
     setIsModalOpen(true);
+  };
+
+  const handleValueChange = value => {
+    console.log(value);
   };
 
   const handleSave = modifiedResult => {
@@ -105,7 +115,7 @@ export const ResultTable = props => {
   // eslint-disable-next-line react/prop-types
   return (
     <div className="resultPanel">
-      <TableList>
+      <TableList customHeader={<Slider onChange={handleValueChange}></Slider>}>
         {/* eslint-disable-next-line react/prop-types */}
         {aiResult.map(res => (
           // eslint-disable-next-line react/jsx-key

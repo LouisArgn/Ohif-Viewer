@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import './TableList.styl';
 
 export class TableList extends Component {

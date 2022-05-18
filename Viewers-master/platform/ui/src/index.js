@@ -1,4 +1,5 @@
 import {
+  Slider,
   ResultModificationModal,
   Spinner,
   Button,
@@ -79,6 +80,7 @@ export {
   // Elements
   ICONS,
   //
+  Slider,
   Spinner,
   Button,
   Divider, //!\ Add divider ther

@@ -9,7 +9,7 @@ export default {
   },
   getPanelModule({ servicesManager, commandsManager }) {
     const ExtendedConnectedWediagnostixTable = props => {
-      const [showResult, setShowResult] = useState(false);
+      const [showResult, setShowResult] = useState(true);
       useEffect(() => {
         if (props.isOpen === false) setShowResult(false);
       }, [props.isOpen]);

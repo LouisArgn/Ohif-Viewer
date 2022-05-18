@@ -10,6 +10,7 @@ import { LanguageSwitcher } from './languageSwitcher';
 import { Checkbox } from './wediagnostixComponents/Checkbox'; //CHANGED /!\
 import { Divider } from './wediagnostixComponents/Divider'; //CHANGED /!\
 import { Button } from './wediagnostixComponents/Button'; //CHANGED/!\
+import { Slider } from "./wediagnostixComponents/Slider";
 import { ResultModificationModal } from './wediagnostixComponents/ResultModificationModal';
 import { Spinner } from './wediagnostixComponents/Spinner'; //CHANGED/!\
 
@@ -68,5 +69,6 @@ export {
   Divider,
   Button,
   Spinner,
-  ResultModificationModal
+  ResultModificationModal,
+  Slider,
 };
