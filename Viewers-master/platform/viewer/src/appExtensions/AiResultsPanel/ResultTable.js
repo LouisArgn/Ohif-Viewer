@@ -86,7 +86,8 @@ export const ResultTable = props => {
     console.log(precisionDict[parseInt(value) - 1]);
     props.setValidatedResult(aiResult);
     props.setResultPrecision(precisionDict[parseInt(value) - 1]);
-    console.log("test");
+    const event = new CustomEvent('resetRectangle');
+    window.dispatchEvent(event);
   };
 
   const handleSave = modifiedResult => {
