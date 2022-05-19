@@ -62,7 +62,7 @@ export const ResultTable = props => {
     if (checkValidation(aiResult)) {
       setShowGenerateReport(true);
       props.setValidatedResult(aiResult);
-    }
+    } else setShowGenerateReport(false);
   }, [aiResult, props]);
 
   const validate = (isValidate, id) => {
@@ -179,6 +179,7 @@ export const ResultTable = props => {
                         event.stopPropagation();
                         console.log('valider: ' + res.teeth);
                         validate(true, res.id);
+                        props.setValidatedResult(aiResult);
                       }}
                     />
                     <Icon
@@ -188,6 +189,7 @@ export const ResultTable = props => {
                         event.stopPropagation();
                         console.log('refuser: ' + res.teeth);
                         validate(false, res.id);
+                        props.setValidatedResult(aiResult);
                       }}
                     />
                   </div>
