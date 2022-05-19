@@ -12,7 +12,7 @@
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    background: linear-gradient(to right, var(--default-color) 0%, rgb(236,61,61) 50%, #DEE2E6 50%, #DEE2E6 100%);;
+    background: linear-gradient(to right, var(--default-color) 0%, rgb(236,61,61) 100%, #DEE2E6 100%, #DEE2E6 100%);;
     border: 1px solid var(--ui-border-color-active);
     margin-bottom: 4px;
     height: 10px;

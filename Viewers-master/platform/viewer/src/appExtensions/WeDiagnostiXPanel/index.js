@@ -13,9 +13,10 @@ export default {
       useEffect(() => {
         if (props.isOpen === false) setShowResult(false);
       }, [props.isOpen]);
-      window.addEventListener('resultReady', () => {
+      window.addEventListener('resultReady', (event) => {
         console.log('Change panel');
         setShowResult(true);
+        event.stopImmediatePropagation();
       });
       return showResult ? (
         <ResultTable

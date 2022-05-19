@@ -71,6 +71,7 @@
 }
 
 .tableListHeader {
+    min-height: 63px;
     overflow: unset!important;
 }
 .tableList {

@@ -50,8 +50,9 @@ export const ResultTable = props => {
     translation: { FR: '' },
   });
   const [aiResult, setAiResult] = useState(() => {
-    console.log('test');
-    return setValidation(props.getAiResult());
+    console.log('test useState aiResult');
+    let result = props.getAiResult();
+    return setValidation(result);
     // return setValidation(testAiResult);
   });
   const [showGenerateReport, setShowGenerateReport] = useState(false);
@@ -85,7 +86,6 @@ export const ResultTable = props => {
     console.log(precisionDict[parseInt(value) - 1]);
     props.setValidatedResult(aiResult);
     props.setResultPrecision(precisionDict[parseInt(value) - 1]);
-    setAiResult(props.getAiResult());
     console.log("test");
   };
 
@@ -115,8 +115,13 @@ export const ResultTable = props => {
     console.log(modifiedResultList);
     setAiResult(modifiedResultList);
   };
-  /** Add the key, value pair  {isValidate: boolean} on each elem in list**/
+  window.addEventListener('precisionChanged', event => {
+    let res = props.getAiResult();
+    setAiResult(setValidation(res));
+    event.stopImmediatePropagation();
+  });
 
+  /** Add the key, value pair  {isValidate: boolean} on each elem in list**/
   // eslint-disable-next-line react/prop-types
   return (
     <div className="resultPanel">

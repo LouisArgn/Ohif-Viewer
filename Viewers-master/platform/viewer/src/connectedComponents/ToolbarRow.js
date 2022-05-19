@@ -243,7 +243,7 @@ class ToolbarRow extends Component {
             </div>
           </div>
           {buttonComponents}
-          <ConnectedLayoutButton />
+          {/*<ConnectedLayoutButton /> TODO/!\ Enable Layout button when viewing 3D image */}
           <div
             className="pull-right m-t-1 rm-x-1"
             style={{ marginLeft: 'auto' }}

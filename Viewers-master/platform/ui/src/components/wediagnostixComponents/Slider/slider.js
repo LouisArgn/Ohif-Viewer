@@ -13,14 +13,14 @@ export const Slider = props => {
         max="3"
         step="1"
         onChange={event => {
-          document.getElementById(
+          /*document.getElementById(
             'slider'
           ).style.background = `linear-gradient(to right, var(--default-color) 0%, rgb(236,61,61) ${((event
             .target.value -
             1) /
             (3 - 1)) *
             100}%, #DEE2E6 ${((event.target.value - 1) / (3 - 1)) *
-            100}%, #DEE2E6 100%)`;
+            100}%, #DEE2E6 100%)`;*/
           props.onChange(event.target.value);
         }}
       />

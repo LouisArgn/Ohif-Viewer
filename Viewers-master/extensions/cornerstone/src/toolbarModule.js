@@ -35,7 +35,7 @@ const enums = {
 };
 
 const definitions = [
-  {
+  /*{
     id: 'StackScroll',
     label: 'Stack Scroll',
     icon: 'bars',
@@ -43,7 +43,7 @@ const definitions = [
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'StackScroll' },
-  },
+  },*/
   {
     id: 'Zoom',
     label: 'Zoom',
@@ -52,15 +52,6 @@ const definitions = [
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'Zoom' },
-  },
-  {
-    id: 'Wwwc',
-    label: 'Levels',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-    commandName: 'setToolActive',
-    commandOptions: { toolName: 'Wwwc' },
   },
   {
     id: 'Pan',
@@ -98,19 +89,21 @@ const definitions = [
     commandName: 'setToolActive',
     commandOptions: { toolName: 'Angle' },
   }*/,
-  {
-    id: 'Reset',
-    label: 'Reset',
-    icon: 'reset',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'resetViewport',
-  },
+
   {
     id: 'More',
     label: 'More',
     icon: 'ellipse-circle',
     buttons: [
+      {
+        id: 'Wwwc',
+        label: 'Levels',
+        icon: 'level',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Wwwc' },
+      },
       {
         id: 'Magnify',
         label: 'Magnify',
@@ -171,6 +164,14 @@ const definitions = [
         //
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'rotateViewportCW',
+      },
+      {
+        id: 'Reset',
+        label: 'Reset',
+        icon: 'reset',
+        //
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'resetViewport',
       } /*,
       {
         id: 'FlipH',
@@ -216,9 +217,10 @@ const definitions = [
           togglable: true,
         },
       },*/,
+      ,
     ],
   },
-  {
+  /*  {
     id: 'Exit2DMPR',
     label: 'Exit 2D MPR',
     icon: 'times',
@@ -226,7 +228,7 @@ const definitions = [
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'setCornerstoneLayout',
     context: 'ACTIVE_VIEWPORT::VTK',
-  },
+  },*/
   {
     id: 'Result',
     label: 'Highlight results',

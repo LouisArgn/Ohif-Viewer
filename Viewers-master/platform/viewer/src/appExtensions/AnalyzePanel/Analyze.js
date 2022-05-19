@@ -30,9 +30,11 @@ export const Analyze = props => {
     setIsSpinnerOpen(false);
   }, [props.isOpen]);
 
-  window.addEventListener('resultReady', () => {
+  window.addEventListener('resultReady', (event) => {
     console.log('Results are ready');
     setIsSpinnerOpen(false);
+    event.stopImmediatePropagation();
+
   });
 
   const handleReasonChange = event => {
