@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 
 import OHIFCornerstoneViewportOverlay from './components/OHIFCornerstoneViewportOverlay';
 import ConnectedCornerstoneViewport from './ConnectedCornerstoneViewport';
@@ -6,7 +6,6 @@ import OHIF from '@ohif/core';
 import PropTypes from 'prop-types';
 import cornerstone from 'cornerstone-core';
 import checkForSRAnnotations from './tools/checkForSRAnnotations';
-//import { fabric } from 'fabric';
 
 const { StackManager } = OHIF.utils;
 
@@ -407,17 +406,6 @@ class OHIFCornerstoneViewport extends Component {
           }}
         >
           <canvas id="c" />
-          {/*<button
-            id="circ"
-            style={{
-              pointerEvents: 'all',
-              position: 'absolute',
-              left: 0,
-            }}
-            onClick={() => this.handleClick()}
-          >
-            DRAW CENTER
-          </button>*/}
         </div>
       </div>
     );
