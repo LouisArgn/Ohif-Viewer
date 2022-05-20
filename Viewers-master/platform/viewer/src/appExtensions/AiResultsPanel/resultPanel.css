@@ -94,6 +94,9 @@
     outline: 1px solid var(--ui-border-color-active);
 }
 
+.tableListItem.Selected {
+    border: solid #14FF92;
+}
 
 .tableListItem:hover {
     border: solid var(--active-color);
@@ -107,7 +110,7 @@
 }
 .result{}
 .validResult {
-    color: green;
+    color: #00AF9B;
 }
 .invalidResult {
     color: red;

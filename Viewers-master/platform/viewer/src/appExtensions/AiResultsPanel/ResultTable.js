@@ -26,7 +26,7 @@ const testAiResult = [
   },
 ];
 
-const precisionDict = ["Specific", "Optimal", "Sensible"]
+const precisionDict = ['Specific', 'Optimal', 'Sensible'];
 export const ResultTable = props => {
   const setValidation = list => {
     return list.map(elem => {
@@ -131,16 +131,26 @@ export const ResultTable = props => {
         {aiResult.map(res => (
           // eslint-disable-next-line react/jsx-key
           <TableListItem
+            itemClass={res.id === selectedResult.id ? 'Selected' : ''}
             onItemClick={event => {
               event.stopPropagation();
-              console.log('ok boy: ' + res.teeth);
-              let drawEvent = new CustomEvent('drawRectangle', {
-                detail: {
-                  diseaseId: res.id,
-                },
-              });
-              window.dispatchEvent(drawEvent);
-              setSelectedResult(res);
+              if (res.id === selectedResult.id) {
+                let resetEvent = new CustomEvent('resetRectangle');
+                window.dispatchEvent(resetEvent);
+                setSelectedResult({
+                  id: -1,
+                  teeth: -1,
+                  translation: { FR: '' },
+                });
+              } else {
+                let drawEvent = new CustomEvent('drawRectangle', {
+                  detail: {
+                    diseaseId: res.id,
+                  },
+                });
+                window.dispatchEvent(drawEvent);
+                setSelectedResult(res);
+              }
             }}
             itemKey={res.id}
             itemMeta={res.teeth}

@@ -188,8 +188,11 @@ class OHIFCornerstoneViewport extends Component {
     this.setState({ dimensionsReady: false });
     window.addEventListener('resetRectangle', event => {
       if (this.state.isDrawn) {
-        this.drawOrClear();
-        this.drawOrClear();
+        console.log(this.state.isDrawn);
+        this.drawOrClear(true);
+        console.log('draw');
+        console.log(this.state.isDrawn);
+        this.drawOrClear(false);
       }
       event.stopImmediatePropagation();
     });
@@ -207,7 +210,7 @@ class OHIFCornerstoneViewport extends Component {
       this.drawRectangle(event.detail.diseaseId);
     });
     window.addEventListener('drawOrClear', event => {
-      this.drawOrClear();
+      this.drawOrClear(this.state.isDrawn);
     });
   }
   setDimensions() {
@@ -263,20 +266,24 @@ class OHIFCornerstoneViewport extends Component {
     }
   }
 
-  drawOrClear() {
-    if (this.state.isDrawn) {
+  drawOrClear(clear) {
+    if (this.state.isDrawn && clear) {
+      console.log('clear');
       var canvas = document.getElementById('c');
       var ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.setState({ isDrawn: false });
-    } else this.drawRectangle(undefined);
+    } else {
+      console.log('draw rectangles');
+      this.drawRectangle(undefined);
+    };
   }
 
   drawRectangle(diseaseId) {
     var canvas = document.getElementById('c');
     var ctx = canvas.getContext('2d');
     ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(0,175,155,1)';
+    ctx.strokeStyle = 'rgb(0,175,155)';
     if (this.state.diseasesPosReady) {
       let ratio =
         this.state.originalWidth > this.state.containerWidth
@@ -308,7 +315,7 @@ class OHIFCornerstoneViewport extends Component {
           );
         } else {
           ctx.lineWidth = 3;
-          ctx.strokeStyle = 'rgba(20,255,146, 1)';
+          ctx.strokeStyle = 'rgb(20,255,146)';
           ctx.strokeRect(
             pos.pos.x / ratio - offsetWidth,
             pos.pos.y / ratio + offsetHeight,
