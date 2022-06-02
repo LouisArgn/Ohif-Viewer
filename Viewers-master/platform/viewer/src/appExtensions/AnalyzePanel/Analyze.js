@@ -26,7 +26,17 @@ const examIndicationsValues = [
 export const Analyze = props => {
   const [examIndication, setExamIndication] = useState(examIndicationsValues);
   const [isSpinnerOpen, setIsSpinnerOpen] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
+    if (props.isOpen) {
+      const event = new CustomEvent('start_conversion', {
+        detail: {
+          studyInstance: props.activeViewport.StudyInstanceUID,
+          studies: props.studies
+        },
+      });
+      window.dispatchEvent(event);
+    }
     setIsSpinnerOpen(false);
   }, [props.isOpen]);
 
@@ -34,7 +44,6 @@ export const Analyze = props => {
     console.log('Results are ready');
     setIsSpinnerOpen(false);
     event.stopImmediatePropagation();
-
   });
 
   const handleReasonChange = event => {
@@ -104,6 +113,8 @@ export const Analyze = props => {
                 activateSpinner();
                 props.setReportReason(examIndication);
                 // eslint-disable-next-line react/prop-types
+                console.log(props.activeViewport.StudyInstanceUID);
+                console.log(props.studies);
                 props.analyze(
                   props.activeViewport.StudyInstanceUID,
                   props.studies

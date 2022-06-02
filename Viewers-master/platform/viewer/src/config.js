@@ -1,6 +1,6 @@
 import OHIF from '@ohif/core';
 import cornerstone from 'cornerstone-core';
-import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
+import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js';
 import dicomParser from 'dicom-parser';
 import version from './version.js';
 import AppContext from './context/AppContext';

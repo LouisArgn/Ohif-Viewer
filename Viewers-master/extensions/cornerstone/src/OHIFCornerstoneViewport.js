@@ -207,6 +207,7 @@ class OHIFCornerstoneViewport extends Component {
       this.setState({ diseasesPos: event.detail });
     });
     window.addEventListener('drawRectangle', event => {
+      console.log(event.detail.diseaseId);
       this.drawRectangle(event.detail.diseaseId);
     });
     window.addEventListener('drawOrClear', event => {
@@ -255,11 +256,6 @@ class OHIFCornerstoneViewport extends Component {
         let rect = entries[0].contentRect;
 
         // current width & height
-        let width = rect.width;
-        let height = rect.height;
-
-        console.log('Current Width : ' + width);
-        console.log('Current Height : ' + height);
         this.setDimensions();
       });
       resize_ob.observe(document.querySelector('#containerDiv'));
@@ -276,7 +272,7 @@ class OHIFCornerstoneViewport extends Component {
     } else {
       console.log('draw rectangles');
       this.drawRectangle(undefined);
-    };
+    }
   }
 
   drawRectangle(diseaseId) {

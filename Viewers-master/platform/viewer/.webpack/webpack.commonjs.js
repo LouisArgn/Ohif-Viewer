@@ -42,6 +42,11 @@ module.exports = (env, argv) => {
           from: `${PUBLIC_DIR}/${APP_CONFIG}`,
           to: `${DIST_DIR}/app-config.js`,
         },
+        {
+          from:
+            '../../../node_modules/cornerstone-wado-image-loader/dist/dynamic-import',
+          to: DIST_DIR,
+        },
       ]),
       // Generate "index.html" w/ correct includes/imports
       // NOTE: We use this for E2E Tests
