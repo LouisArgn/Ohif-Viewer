@@ -233,6 +233,9 @@ class App extends Component {
                             setReportReason={this.props.setReportReason}
                             generateReport={this.props.generateReport}
                             setResultPrecision={this.props.setResultPrecision}
+                            isLoggedIn={this.props.isLoggedIn}
+                            convert={this.props.convert}
+                            openAlertModal={this.props.openAlertModal}
                           />
                         </ModalProvider>
                       </DialogProvider>

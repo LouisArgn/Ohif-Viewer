@@ -216,6 +216,9 @@ class OHIFStandaloneViewer extends Component {
                         selectedUID={this.props.selectedUID}
                         fileList={this.props.fileList}
                         analyze={this.props.analyze}
+                        isLoggedIn={this.props.isLoggedIn}
+                        convert={this.props.convert}
+                        openAlertModal={this.props.openAlertModal}
                         getAiResult={this.props.getAiResult}
                         setValidatedResult={this.props.setValidatedResult}
                         setReportReason={this.props.setReportReason}

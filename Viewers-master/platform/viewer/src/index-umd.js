@@ -19,6 +19,9 @@ function installViewer(
   setReportReason = reason => {},
   generateReport = () => {},
   setResultPrecision = () => {},
+  isLoggedIn = () => {},
+  convert = () => {},
+  openAlertModal = () => {},
   fileList = undefined
 ) {
   const container = document.getElementById(containerId);
@@ -40,6 +43,9 @@ function installViewer(
       setReportReason={setReportReason}
       generateReport={generateReport}
       setResultPrecision={setResultPrecision}
+      isLoggedIn={isLoggedIn}
+      convert={convert}
+      openAlertModal={openAlertModal}
     />,
     container,
     callback

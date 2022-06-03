@@ -252,7 +252,14 @@ class ToolbarRow extends Component {
               <RoundedButtonGroup
                 options={this.buttonGroups.right}
                 value={this.props.selectedRightSidePanel || ''}
-                onValueChanged={onPressRight}
+                onValueChanged={event => {
+                  if (this.props.isLoggedIn()) {
+                    onPressRight(event);
+                  } else {
+                    console.log(this.props.isLoggedIn());
+                    this.props.openAlertModal();
+                  }
+                }}
               />
             )}
           </div>

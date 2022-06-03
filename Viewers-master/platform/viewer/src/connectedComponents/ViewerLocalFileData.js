@@ -139,6 +139,9 @@ class ViewerLocalFileData extends Component {
                 setValidatedResult={this.props.setValidatedResult}
                 setReportReason={this.props.setReportReason}
                 generateReport={this.props.generateReport}
+                isLoggedIn={this.props.isLoggedIn}
+                convert={this.props.convert}
+                openAlertModal={this.props.openAlertModal}
                 studies={this.state.studies}
                 studyInstanceUIDs={
                   this.state.studies &&

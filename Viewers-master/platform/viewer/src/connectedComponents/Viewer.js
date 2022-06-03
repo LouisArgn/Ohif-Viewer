@@ -234,7 +234,10 @@ class Viewer extends Component {
       selectedUID,
       analyze,
       getAiResult,
-      setResultPrecision
+      setResultPrecision,
+      isLoggedIn,
+      convert,
+      openAlertModal
     } = this.props;
 
     const activeViewport = viewports[activeViewportIndex];
@@ -374,6 +377,9 @@ class Viewer extends Component {
             }}
             studies={this.props.studies}
             analyze={this.props.analyze}
+            convert={this.props.convert}
+            isLoggedIn={this.props.isLoggedIn}
+            openAlertModal={this.props.openAlertModal}
           />
         </ErrorBoundaryDialog>
         <AppContext.Consumer>
@@ -458,6 +464,9 @@ class Viewer extends Component {
                   generateReport={this.props.generateReport}
                   setReportReason={this.props.setReportReason}
                   setResultPrecision={this.props.setResultPrecision}
+                  isLoggedIn={this.props.isloggedIn}
+                  convert={this.props.convert}
+                  openAlertModal={this.props.openAlertModal}
                 />
               )}
             </SidePanel>

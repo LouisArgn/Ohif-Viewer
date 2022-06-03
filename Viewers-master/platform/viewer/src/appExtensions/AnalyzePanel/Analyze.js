@@ -29,13 +29,14 @@ export const Analyze = props => {
   const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
     if (props.isOpen) {
-      const event = new CustomEvent('start_conversion', {
+      props.convert(props.activeViewport.StudyInstanceUID, props.studies);
+      /*const event = new CustomEvent('start_conversion', {
         detail: {
           studyInstance: props.activeViewport.StudyInstanceUID,
           studies: props.studies
         },
       });
-      window.dispatchEvent(event);
+      window.dispatchEvent(event);*/
     }
     setIsSpinnerOpen(false);
   }, [props.isOpen]);
